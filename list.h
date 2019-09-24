@@ -15,4 +15,26 @@ struct Node {
 
 typedef struct Node ListNode;
 
+typedef struct {
+    ListNode *head;
+    ListNode *tail;
+    unsigned int size;
+} List;
+
 ListNode *createListNode();
+
+ListNode *withValue(int *value);
+
+List *emptyList();
+
+List *addLast(List *list, int *value);
+
+List *addAfter(List *list, int *value, unsigned int index);
+
+int *removeAt(List *list, unsigned int index);
+
+int *first(List *list);
+
+int *last(List *list);
+
+void prettyPrint(List *list);
