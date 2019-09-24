@@ -41,7 +41,8 @@ List *addAfter(List *list, int *value, unsigned int index) {
 }
 
 int *removeAt(List *list, unsigned int index) {
-    if (index == 0) {
+    if (list->size == 0) { return NULL; }
+    else if (index == 0) {
         list->size--;
         if (list->head == list->tail) {
             ListNode *pNode = list->head;

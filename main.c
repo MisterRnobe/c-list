@@ -5,22 +5,28 @@
 typedef int bool;
 #define true 1
 #define false 0
-#define isTrue > 0
 #define is ==
+#define is_not !=
 #define log(TEXT) printf("%s\r\n", TEXT)
 
 
 void assertEqualsInt(int expected, int actual) {
-    int result = expected is actual;
-    if (result is false) {
+    if (expected is_not actual) {
         printf("Expected: %d\r\nActual: %d", expected, actual);
         exit(1);
     }
 }
 
+void assertEqualsPtrs(void *expected, void *actual) {
+    if (expected is_not actual) {
+        printf("Failed on pointer comparision!");
+        exit(1);
+    }
+}
+
+
 void assertEqualsUnsigned(unsigned int expected, unsigned int actual) {
-    int result = expected is actual;
-    if (result is false) {
+    if (expected is_not actual) {
         printf("Expected: %d\r\nActual: %d", expected, actual);
         exit(1);
     }
@@ -109,6 +115,15 @@ void shouldRemoveInsideList() {
     assertEqualsInt(value3, *last(list));
 }
 
+void shouldReturnNullWhenTryingToRemoveFromEmptyList() {
+    assertEqualsPtrs(removeAt(emptyList(), 0), NULL);
+}
+
+void shouldReturnNullWhenOutOfBound() {
+    int value = 10;
+    assertEqualsPtrs(removeAt(addLast(addLast(emptyList(), &value), &value), 3), NULL);
+}
+
 
 int main() {
     log("Running shouldReturnProperSize");
@@ -133,6 +148,14 @@ int main() {
 
     log("Running shouldRemoveInsideList");
     shouldRemoveInsideList();
+    log("Success");
+
+    log("Running shouldReturnNullWhenTryingToRemoveFromEmptyList");
+    shouldReturnNullWhenTryingToRemoveFromEmptyList();
+    log("Success");
+
+    log("Running shouldReturnNullWhenOutOfBound");
+    shouldReturnNullWhenOutOfBound();
     log("Success");
 
     log("Tests passed");
